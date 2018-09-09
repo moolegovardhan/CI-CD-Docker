@@ -12,22 +12,14 @@ node {
     }
 
     stage('Checkout') {
-        checkout scm
+       git 'https://github.com/moolegovardhan/CI-CD-Docker'
     }
 
     stage('Build'){
         sh "mvn clean install"
     }
 
-    stage('Sonar'){
-        try {
-            sh "mvn sonar:sonar"
-        } catch(error){
-            echo "The sonar server could not be reached ${error}"
-        }
-     }
-
-    stage("Image Prune"){
+        stage("Image Prune"){
         imagePrune(CONTAINER_NAME)
     }
 
